@@ -17,8 +17,8 @@ public class CarroSedan extends Vehiculo {
     public CarroSedan(String placa, String marca, int modelo, float precioDiario, String estado, 
                       String tipoCombustible, String transmision) {
         super(placa, marca, modelo, precioDiario, estado);
-        this.tipoCombustible = tipoCombustible;
-        this.transmision = transmision;
+        setTipoCombustible(tipoCombustible);
+        setTransmision(transmision);
     }
 
     // Getters y Setters
@@ -27,6 +27,13 @@ public class CarroSedan extends Vehiculo {
     }
 
     public void setTipoCombustible(String tipoCombustible) {
+        if (tipoCombustible == null || (!tipoCombustible.equalsIgnoreCase("gasolina") 
+            && !tipoCombustible.equalsIgnoreCase("diésel") 
+            && !tipoCombustible.equalsIgnoreCase("eléctrico")
+            && !tipoCombustible.equalsIgnoreCase("diesel")
+            && !tipoCombustible.equalsIgnoreCase("electrico"))) {
+            throw new IllegalArgumentException("Tipo de combustible inválido (gasolina, diésel, eléctrico).");
+        }
         this.tipoCombustible = tipoCombustible;
     }
 
@@ -35,6 +42,11 @@ public class CarroSedan extends Vehiculo {
     }
 
     public void setTransmision(String transmision) {
+        if (transmision == null || (!transmision.equalsIgnoreCase("automática") 
+            && !transmision.equalsIgnoreCase("manual")
+            && !transmision.equalsIgnoreCase("automatica"))) {
+            throw new IllegalArgumentException("Transmisión inválida (automática o manual).");
+        }
         this.transmision = transmision;
     }
 }
