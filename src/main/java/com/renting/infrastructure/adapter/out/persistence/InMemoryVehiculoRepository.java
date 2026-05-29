@@ -33,15 +33,23 @@ public class InMemoryVehiculoRepository implements VehiculoRepository {
 
     @Override
     public void eliminar(String placa) {
-        vectorVehiculos.removeIf(v -> v.getPlaca().equals(placa));
+        for (int i = 0; i < vectorVehiculos.size(); i++) {
+            if (vectorVehiculos.get(i).getPlaca().equals(placa)) {
+                vectorVehiculos.remove(i);
+                break;
+            }
+        }
     }
 
     @Override
     public Vehiculo buscarPorPlaca(String placa) {
-        return vectorVehiculos.stream()
-            .filter(v -> v.getPlaca().equals(placa))
-            .findFirst()
-            .orElse(null);
+        for (int i = 0; i < vectorVehiculos.size(); i++) {
+            Vehiculo vehiculo = vectorVehiculos.get(i);
+            if (vehiculo.getPlaca().equals(placa)) {
+                return vehiculo;
+            }
+        }
+        return null;
     }
 
     @Override

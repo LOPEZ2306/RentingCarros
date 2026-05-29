@@ -34,15 +34,23 @@ public class InMemoryClienteRepository implements ClienteRepository {
 
     @Override
     public void eliminar(String cedula) {
-        vectorClientes.removeIf(c -> c.getCedula().equals(cedula));
+        for (int i = 0; i < vectorClientes.size(); i++) {
+            if (vectorClientes.get(i).getCedula().equals(cedula)) {
+                vectorClientes.remove(i);
+                break; // Rompemos el ciclo porque ya lo eliminó
+            }
+        }
     }
 
     @Override
     public Cliente buscarPorCedula(String cedula) {
-        return vectorClientes.stream()
-            .filter(c -> c.getCedula().equals(cedula))
-            .findFirst()
-            .orElse(null);
+        for (int i = 0; i < vectorClientes.size(); i++) {
+            Cliente cliente = vectorClientes.get(i);
+            if (cliente.getCedula().equals(cedula)) {
+                return cliente;
+            }
+        }
+        return null; // Si no lo encuentra
     }
 
     @Override
