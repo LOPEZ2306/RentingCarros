@@ -17,8 +17,8 @@ public class CamionetaSUV extends Vehiculo {
     public CamionetaSUV(String placa, String marca, int modelo, float precioDiario, String estado,
                         String traccion, float capacidadMaletero) {
         super(placa, marca, modelo, precioDiario, estado);
-        this.traccion = traccion;
-        this.capacidadMaletero = capacidadMaletero;
+        setTraccion(traccion);
+        setCapacidadMaletero(capacidadMaletero);
     }
 
     // Getters y Setters
@@ -27,6 +27,9 @@ public class CamionetaSUV extends Vehiculo {
     }
 
     public void setTraccion(String traccion) {
+        if (traccion == null || (!traccion.equalsIgnoreCase("4x2") && !traccion.equalsIgnoreCase("4x4"))) {
+            throw new IllegalArgumentException("Tracción inválida (4x2 o 4x4).");
+        }
         this.traccion = traccion;
     }
 
@@ -35,6 +38,9 @@ public class CamionetaSUV extends Vehiculo {
     }
 
     public void setCapacidadMaletero(float capacidadMaletero) {
+        if (capacidadMaletero <= 0) {
+            throw new IllegalArgumentException("La capacidad del maletero debe ser un número positivo.");
+        }
         this.capacidadMaletero = capacidadMaletero;
     }
 }
