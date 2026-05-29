@@ -1,45 +1,52 @@
 package com.renting.infrastructure.util;
 
-import java.util.Scanner;
-
+/**
+ * Validador recursivo puro para cumplir HU2/HU8 en un entorno web.
+ */
 public class RecursiveValidator {
 
-    private static final Scanner scanner = new Scanner(System.in);
-
     /**
-     * Recursively asks for a non-empty string input.
-     * @param prompt The message to show the user.
-     * @return A valid non-empty string.
+     * Valida que el texto no tenga caracteres especiales (letras, numeros, espacios son permitidos).
      */
-    public static String validateString(String prompt) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
+    public static boolean sinCaracteresEspeciales(String text) {
+        if (text == null || text.trim().isEmpty()) return false;
+        return checkSinCaracteresEspeciales(text, 0);
+    }
 
-        if (input.isEmpty()) {
-            System.out.println("Error: El campo no puede estar vacio. Intente de nuevo.");
-            return validateString(prompt); // Recursive call
-        }
-        return input;
+    private static boolean checkSinCaracteresEspeciales(String text, int index) {
+        if (index == text.length()) return true;
+        char c = text.charAt(index);
+        if (!Character.isLetterOrDigit(c) && c != ' ') return false;
+        return checkSinCaracteresEspeciales(text, index + 1);
     }
 
     /**
-     * Recursively asks for a positive integer.
-     * @param prompt The message to show the user.
-     * @return A valid positive integer.
+     * Valida que el texto no tenga numeros ni caracteres especiales (solo letras y espacios).
      */
-    public static int validatePositiveInt(String prompt) {
-        System.out.print(prompt);
-        try {
-            int input = Integer.parseInt(scanner.nextLine().trim());
-            if (input <= 0) {
-                System.out.println("Error: Debe ser un numero positivo mayor a cero.");
-                return validatePositiveInt(prompt);
-            }
-            return input;
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Debe ingresar un numero valido.");
-            return validatePositiveInt(prompt);
-        }
+    public static boolean sinNumerosNiEspeciales(String text) {
+        if (text == null || text.trim().isEmpty()) return false;
+        return checkSinNumerosNiEspeciales(text, 0);
     }
-    
+
+    private static boolean checkSinNumerosNiEspeciales(String text, int index) {
+        if (index == text.length()) return true;
+        char c = text.charAt(index);
+        if (!Character.isLetter(c) && c != ' ') return false;
+        return checkSinNumerosNiEspeciales(text, index + 1);
+    }
+
+    /**
+     * Valida que el texto contenga solo numeros.
+     */
+    public static boolean soloNumeros(String text) {
+        if (text == null || text.trim().isEmpty()) return false;
+        return checkSoloNumeros(text, 0);
+    }
+
+    private static boolean checkSoloNumeros(String text, int index) {
+        if (index == text.length()) return true;
+        char c = text.charAt(index);
+        if (!Character.isDigit(c)) return false;
+        return checkSoloNumeros(text, index + 1);
+    }
 }
