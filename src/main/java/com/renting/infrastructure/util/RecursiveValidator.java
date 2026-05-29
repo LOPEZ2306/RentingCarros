@@ -2,10 +2,6 @@ package com.renting.infrastructure.util;
 
 import java.util.Scanner;
 
-/**
- * Utility class for recursive validations as required by HU1.
- * Designed to be easy for juniors to understand.
- */
 public class RecursiveValidator {
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -37,14 +33,13 @@ public class RecursiveValidator {
             int input = Integer.parseInt(scanner.nextLine().trim());
             if (input <= 0) {
                 System.out.println("Error: Debe ser un numero positivo mayor a cero.");
-                return validatePositiveInt(prompt); // Recursive call
+                return validatePositiveInt(prompt);
             }
             return input;
         } catch (NumberFormatException e) {
             System.out.println("Error: Debe ingresar un numero valido.");
-            return validatePositiveInt(prompt); // Recursive call
+            return validatePositiveInt(prompt);
         }
     }
     
-    // Add more validation methods as needed in future HUs
 }
