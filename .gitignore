@@ -54,3 +54,7 @@ build/
 
 ### Temporary ###
 *.tmp
+
+### AI Context ###
+docs/
+CONTEXTO_AGENTE_IA.txt

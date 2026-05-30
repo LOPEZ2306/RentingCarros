@@ -1,12 +1,9 @@
 package com.renting.domain.model;
 
-/**
- * Representa a un cliente del sistema de renting.
- * Cumple con HU2: Encapsulamiento y atributos especificados.
- */
+import com.renting.infrastructure.util.RecursiveValidator;
+
 public class Cliente {
-    
-    // Atributos privados (Encapsulamiento)
+
     private String cedula;
     private String nombre;
     private String apellido;
@@ -17,23 +14,23 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String cedula, String nombre, String apellido, String telefono, String direccion, String licenciaConduccion) {
+    public Cliente(String cedula, String nombre, String apellido,
+                   String telefono, String direccion, String licenciaConduccion) {
         setCedula(cedula);
         setNombre(nombre);
         setApellido(apellido);
         setTelefono(telefono);
-        this.direccion = direccion;
-        this.licenciaConduccion = licenciaConduccion;
+        setDireccion(direccion);
+        setLicenciaConduccion(licenciaConduccion);
     }
 
-    // Getters y Setters
     public String getCedula() {
         return cedula;
     }
 
     public void setCedula(String cedula) {
-        if (!com.renting.infrastructure.util.RecursiveValidator.sinCaracteresEspeciales(cedula)) {
-            throw new IllegalArgumentException("Cédula inválida: sin caracteres especiales.");
+        if (!RecursiveValidator.soloNumeros(cedula)) {
+            throw new IllegalArgumentException("Cédula inválida: solo se permiten números.");
         }
         this.cedula = cedula;
     }
@@ -43,8 +40,8 @@ public class Cliente {
     }
 
     public void setNombre(String nombre) {
-        if (!com.renting.infrastructure.util.RecursiveValidator.sinNumerosNiEspeciales(nombre)) {
-            throw new IllegalArgumentException("Nombre inválido: sin números ni caracteres especiales.");
+        if (!RecursiveValidator.sinNumerosNiEspeciales(nombre)) {
+            throw new IllegalArgumentException("Nombre inválido: solo se permiten letras y espacios.");
         }
         this.nombre = nombre;
     }
@@ -54,8 +51,8 @@ public class Cliente {
     }
 
     public void setApellido(String apellido) {
-        if (!com.renting.infrastructure.util.RecursiveValidator.sinNumerosNiEspeciales(apellido)) {
-            throw new IllegalArgumentException("Apellido inválido: sin números ni caracteres especiales.");
+        if (!RecursiveValidator.sinNumerosNiEspeciales(apellido)) {
+            throw new IllegalArgumentException("Apellido inválido: solo se permiten letras y espacios.");
         }
         this.apellido = apellido;
     }
@@ -65,8 +62,8 @@ public class Cliente {
     }
 
     public void setTelefono(String telefono) {
-        if (!com.renting.infrastructure.util.RecursiveValidator.soloNumeros(telefono)) {
-            throw new IllegalArgumentException("Teléfono inválido: solo números.");
+        if (!RecursiveValidator.soloNumeros(telefono)) {
+            throw new IllegalArgumentException("Teléfono inválido: solo se permiten números.");
         }
         this.telefono = telefono;
     }
@@ -75,6 +72,7 @@ public class Cliente {
         return direccion;
     }
 
+    /** La dirección no tiene restricciones especiales */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
@@ -83,6 +81,7 @@ public class Cliente {
         return licenciaConduccion;
     }
 
+    /** La licencia no tiene restricciones especiales */
     public void setLicenciaConduccion(String licenciaConduccion) {
         this.licenciaConduccion = licenciaConduccion;
     }
