@@ -7,14 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Adaptador de persistencia en memoria usando Vectores Dinámicos (ArrayList).
- * Cumple con HU6: "requiero que los registros se almacenen en vectores dinámicos"
- */
 @Repository
 public class InMemoryClienteRepository implements ClienteRepository {
-
-    // Vector dinámico para almacenar clientes (HU6)
     private final List<Cliente> vectorClientes = new ArrayList<>();
 
     @Override
