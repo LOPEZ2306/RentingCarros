@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renting de Carros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Menú Lateral -->
+        <aside class="sidebar">
+            <h2 class="logo">Renting<span>Pro</span></h2>
+            <nav class="menu">
+                <button onclick="showSection('clientes')" class="menu-btn active">Gestión de Clientes</button>
+                <button onclick="showSection('vehiculos')" class="menu-btn">Gestión de Vehículos</button>
+                <button onclick="showSection('renting')" class="menu-btn">Gestión de Renting</button>
+                <button onclick="showSection('informes')" class="menu-btn">Informes (HU7)</button>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="content">
+            <!-- Sección Clientes -->
+            <section id="clientes" class="section active">
+                <header>
+                    <h1>Gestión de Clientes</h1>
+                </header>
+                <div class="card">
+                    <h3>Registrar/Modificar Cliente</h3>
+                    <form id="cliente-form">
+                        <div class="form-group">
+                            <input type="text" id="c-cedula" placeholder="Cédula" required>
+                            <input type="text" id="c-nombre" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="c-apellido" placeholder="Apellido" required>
+                            <input type="text" id="c-telefono" placeholder="Teléfono" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="c-direccion" placeholder="Dirección" required>
+                            <input type="text" id="c-licencia" placeholder="Licencia de Conducción" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-primary" onclick="guardarCliente('POST')">Registrar</button>
+                            <button type="button" class="btn-secondary" onclick="guardarCliente('PUT')">Modificar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card mt-4">
+                    <h3>Buscar/Eliminar</h3>
+                    <div class="form-group">
+                        <input type="text" id="c-buscar-cedula" placeholder="Cédula a buscar/eliminar">
+                        <!-- Funcionalidad a implementar según necesidades UI, API ya soporta DELETE -->
+                        <button type="button" class="btn-danger" onclick="alert('Función implementada en API. Faltaría el js')">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <h3>Lista de Clientes</h3>
+                    <button class="btn-secondary mb-2" onclick="cargarClientes()">Actualizar Lista</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Teléfono</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-clientes"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Vehículos -->
+            <section id="vehiculos" class="section">
+                <header>
+                    <h1>Gestión de Vehículos</h1>
+                </header>
+                <div class="card">
+                    <h3>Registrar/Modificar Vehículo</h3>
+                    <form id="vehiculo-form">
+                        <div class="form-group">
+                            <select id="v-tipo" onchange="toggleVehiculoCampos()">
+                                <option value="sedan">Carro Sedán</option>
+                                <option value="suv">Camioneta SUV</option>
+                            </select>
+                            <input type="text" id="v-placa" placeholder="Placa" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="v-marca" placeholder="Marca" required>
+                            <input type="number" id="v-modelo" placeholder="Modelo (Año)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="v-precio" placeholder="Precio Diario" required>
+                            <select id="v-estado">
+                                <option value="disponible">Disponible</option>
+                                <option value="alquilado">Alquilado</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Campos Sedán -->
+                        <div class="form-group sedan-campos">
+                            <select id="v-combustible">
+                                <option value="gasolina">Gasolina</option>
+                                <option value="eléctrico">Eléctrico</option>
+                                <option value="diésel">Diésel</option>
+                            </select>
+                            <select id="v-transmision">
+                                <option value="automática">Automática</option>
+                                <option value="manual">Manual</option>
+                            </select>
+                        </div>
+
+                        <!-- Campos SUV -->
+                        <div class="form-group suv-campos" style="display:none;">
+                            <select id="v-traccion">
+                                <option value="4x2">4x2</option>
+                                <option value="4x4">4x4</option>
+                            </select>
+                            <input type="number" id="v-maletero" placeholder="Capacidad Maletero (L)">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-primary" onclick="guardarVehiculo('POST')">Registrar</button>
+                            <button type="button" class="btn-secondary" onclick="guardarVehiculo('PUT')">Modificar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card mt-4">
+                    <h3>Lista de Vehículos</h3>
+                    <button class="btn-secondary mb-2" onclick="cargarVehiculos()">Actualizar Lista</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Placa</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-vehiculos"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección Renting -->
+            <section id="renting" class="section">
+                <header>
+                    <h1>Gestión de Renting</h1>
+                </header>
+                <div class="card">
+                    <h3>Registrar Nuevo Contrato</h3>
+                    <form id="renting-form">
+                        <div class="form-group">
+                            <input type="text" id="r-id" placeholder="ID Contrato" required>
+                            <input type="text" id="r-cedula" placeholder="Cédula Cliente" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="r-placa" placeholder="Placa Vehículo" required>
+                            <input type="text" id="r-fechaini" placeholder="Fecha Inicio" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="r-fechafin" placeholder="Fecha Fin" required>
+                            <input type="number" id="r-dias" placeholder="Total Días" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="r-valor" placeholder="Valor Total" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-primary" onclick="registrarContrato()">Alquilar Vehículo</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card mt-4">
+                    <h3>Finalizar Contrato (Devolución)</h3>
+                    <div class="form-group">
+                        <input type="text" id="r-buscar-id" placeholder="ID Contrato a finalizar">
+                        <button type="button" class="btn-danger" onclick="finalizarContrato()">Finalizar y Devolver</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Informes -->
+            <section id="informes" class="section">
+                <header>
+                    <h1>Informes Generales</h1>
+                </header>
+                <div class="card">
+                    <p>Esta sección corresponde a la HU7 y será implementada en la próxima iteración.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
