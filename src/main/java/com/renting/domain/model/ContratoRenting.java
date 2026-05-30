@@ -14,19 +14,21 @@ public class ContratoRenting {
     private String fechaFin;
     private int totalDias;
     private float valorTotal;
+    private String estado; // "activo" o "finalizado"
 
     public ContratoRenting() {
     }
 
     public ContratoRenting(String idContrato, String cedulaCliente, String placaVehiculo, 
-                           String fechaInicio, String fechaFin, int totalDias, float valorTotal) {
-        this.idContrato = idContrato;
-        this.cedulaCliente = cedulaCliente;
-        this.placaVehiculo = placaVehiculo;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.totalDias = totalDias;
-        this.valorTotal = valorTotal;
+                           String fechaInicio, String fechaFin, int totalDias, float valorTotal, String estado) {
+        setIdContrato(idContrato);
+        setCedulaCliente(cedulaCliente);
+        setPlacaVehiculo(placaVehiculo);
+        setFechaInicio(fechaInicio);
+        setFechaFin(fechaFin);
+        setTotalDias(totalDias);
+        setValorTotal(valorTotal);
+        setEstado(estado);
     }
 
     // Getters y Setters
@@ -35,6 +37,9 @@ public class ContratoRenting {
     }
 
     public void setIdContrato(String idContrato) {
+        if (!com.renting.infrastructure.util.RecursiveValidator.sinCaracteresEspeciales(idContrato)) {
+            throw new IllegalArgumentException("El ID del contrato no debe tener caracteres especiales.");
+        }
         this.idContrato = idContrato;
     }
 
@@ -43,6 +48,9 @@ public class ContratoRenting {
     }
 
     public void setCedulaCliente(String cedulaCliente) {
+        if (!com.renting.infrastructure.util.RecursiveValidator.sinCaracteresEspeciales(cedulaCliente)) {
+            throw new IllegalArgumentException("La cédula no debe tener caracteres especiales.");
+        }
         this.cedulaCliente = cedulaCliente;
     }
 
@@ -51,6 +59,9 @@ public class ContratoRenting {
     }
 
     public void setPlacaVehiculo(String placaVehiculo) {
+        if (!com.renting.infrastructure.util.RecursiveValidator.sinCaracteresEspeciales(placaVehiculo)) {
+            throw new IllegalArgumentException("La placa no debe tener caracteres especiales.");
+        }
         this.placaVehiculo = placaVehiculo;
     }
 
@@ -75,6 +86,9 @@ public class ContratoRenting {
     }
 
     public void setTotalDias(int totalDias) {
+        if (totalDias <= 0) {
+            throw new IllegalArgumentException("El total de días debe ser un número positivo.");
+        }
         this.totalDias = totalDias;
     }
 
@@ -83,6 +97,20 @@ public class ContratoRenting {
     }
 
     public void setValorTotal(float valorTotal) {
+        if (valorTotal < 0) {
+            throw new IllegalArgumentException("El valor total no puede ser negativo.");
+        }
         this.valorTotal = valorTotal;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        if (estado == null || (!estado.equalsIgnoreCase("activo") && !estado.equalsIgnoreCase("finalizado"))) {
+            throw new IllegalArgumentException("El estado debe ser 'activo' o 'finalizado'.");
+        }
+        this.estado = estado;
     }
 }
