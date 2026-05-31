@@ -9,7 +9,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Menú Lateral -->
         <aside class="sidebar">
             <h2 class="logo">Renting<span>Pro</span></h2>
             <nav class="menu">
@@ -20,9 +19,8 @@
             </nav>
         </aside>
 
-        <!-- Contenido Principal -->
         <main class="content">
-            <!-- Sección Clientes -->
+
             <section id="clientes" class="section active">
                 <header>
                     <h1>Gestión de Clientes</h1>
@@ -53,8 +51,7 @@
                     <h3>Buscar/Eliminar</h3>
                     <div class="form-group">
                         <input type="text" id="c-buscar-cedula" placeholder="Cédula a buscar/eliminar">
-                        <!-- Funcionalidad a implementar según necesidades UI, API ya soporta DELETE -->
-                        <button type="button" class="btn-danger" onclick="alert('Función implementada en API. Faltaría el js')">Eliminar</button>
+                        <button type="button" class="btn-danger" onclick="eliminarCliente()">Eliminar</button>
                     </div>
                 </div>
 
@@ -75,7 +72,6 @@
                 </div>
             </section>
 
-            <!-- Sección Vehículos -->
             <section id="vehiculos" class="section">
                 <header>
                     <h1>Gestión de Vehículos</h1>
@@ -101,8 +97,7 @@
                                 <option value="alquilado">Alquilado</option>
                             </select>
                         </div>
-                        
-                        <!-- Campos Sedán -->
+
                         <div class="form-group sedan-campos">
                             <select id="v-combustible">
                                 <option value="gasolina">Gasolina</option>
@@ -115,7 +110,6 @@
                             </select>
                         </div>
 
-                        <!-- Campos SUV -->
                         <div class="form-group suv-campos" style="display:none;">
                             <select id="v-traccion">
                                 <option value="4x2">4x2</option>
@@ -148,7 +142,6 @@
                 </div>
             </section>
 
-            <!-- Sección Renting -->
             <section id="renting" class="section">
                 <header>
                     <h1>Gestión de Renting</h1>
@@ -185,15 +178,72 @@
                 </div>
             </section>
 
-            <!-- Sección Informes -->
-            <section id="informes" class="section">
-                <header>
-                    <h1>Informes Generales</h1>
-                </header>
-                <div class="card">
-                    <p>Esta sección corresponde a la HU7 y será implementada en la próxima iteración.</p>
-                </div>
-            </section>
+<section id="informes" class="section">
+    <header>
+        <h1>Informes Generales</h1>
+    </header>
+
+    <div style="margin-bottom: 1rem;">
+        <button class="btn-secondary" onclick="cargarTodosLosInformes()">Actualizar Informes</button>
+    </div>
+    <div class="card informe-card">
+        <h3>Contratos Activos</h3>
+        <div class="informe-numero" id="informe-contratos-activos">--</div>
+        <p class="informe-label">contratos en curso</p>
+    </div>
+
+    <div class="card informe-card">
+        <h3>Estado de la Flota</h3>
+        <div class="informe-fila">
+            <span>Disponibles:</span>
+            <span class="informe-numero pequeño" id="informe-vehiculos-disponibles">--</span>
+        </div>
+        <div class="informe-fila">
+            <span>Alquilados:</span>
+            <span class="informe-numero pequeño" id="informe-vehiculos-alquilados">--</span>
+        </div>
+    </div>
+
+    <div class="card informe-card">
+        <h3>Ingresos Totales</h3>
+        <div class="informe-numero" id="informe-ingresos">--</div>
+        <p class="informe-label">por contratos activos</p>
+    </div>
+
+    <div class="card mt-4">
+        <h3>Detalle Contratos Activos</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Contrato</th>
+                    <th>Cliente</th>
+                    <th>Vehículo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-contratos-activos"></tbody>
+        </table>
+    </div>
+
+    <div class="card mt-4">
+        <h3>Detalle Contratos Finalizados</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Contrato</th>
+                    <th>Cliente</th>
+                    <th>Vehículo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-contratos-finalizados"></tbody>
+        </table>
+    </div>
+</section>
 
         </main>
     </div>
