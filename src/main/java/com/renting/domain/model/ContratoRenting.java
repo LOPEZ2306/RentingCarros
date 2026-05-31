@@ -1,25 +1,46 @@
 package com.renting.domain.model;
 
-/**
- * Representa un contrato de alquiler en el sistema.
- * Cumple con HU4: Modelo de datos para la gestión del renting.
- */
-public class ContratoRenting {
-    
-    // Atributos privados (Encapsulamiento)
-    private String idContrato;
-    private String cedulaCliente;
-    private String placaVehiculo;
-    private String fechaInicio;
-    private String fechaFin;
-    private int totalDias;
-    private float valorTotal;
-    private String estado; // "activo" o "finalizado"
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+// Esta clase representa un contrato de renting.
+// Con JPA, cada objeto ContratoRenting se guarda como una fila en la tabla "contrato" de MySQL.
+@Entity
+@Table(name = "contrato")
+public class ContratoRenting {
+
+    @Id
+    @Column(name = "id_contrato", nullable = false, length = 36)
+    private String idContrato;
+
+    @Column(name = "cedula_cliente", nullable = false, length = 20)
+    private String cedulaCliente;
+
+    @Column(name = "placa_vehiculo", nullable = false, length = 10)
+    private String placaVehiculo;
+
+    @Column(name = "fecha_inicio", length = 20)
+    private String fechaInicio;
+
+    @Column(name = "fecha_fin", length = 20)
+    private String fechaFin;
+
+    @Column(name = "total_dias")
+    private int totalDias;
+
+    @Column(name = "valor_total")
+    private float valorTotal;
+
+    @Column(name = "estado", nullable = false, length = 15)
+    private String estado;
+
+    // Constructor vacío requerido por JPA
     public ContratoRenting() {
     }
 
-    public ContratoRenting(String idContrato, String cedulaCliente, String placaVehiculo, 
+    public ContratoRenting(String idContrato, String cedulaCliente, String placaVehiculo,
                            String fechaInicio, String fechaFin, int totalDias, float valorTotal, String estado) {
         setIdContrato(idContrato);
         setCedulaCliente(cedulaCliente);
@@ -31,7 +52,6 @@ public class ContratoRenting {
         setEstado(estado);
     }
 
-    // Getters y Setters
     public String getIdContrato() {
         return idContrato;
     }

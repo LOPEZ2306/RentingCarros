@@ -4,57 +4,50 @@ import com.renting.domain.model.Cliente;
 import com.renting.domain.repository.ClienteRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Adaptador de persistencia en memoria usando Vectores Dinámicos (ArrayList).
- * Cumple con HU6: "requiero que los registros se almacenen en vectores dinámicos"
- */
+// Este adaptador conecta la lógica del dominio con la base de datos MySQL.
+// Antes usaba un ArrayList en memoria; ahora delega cada operación a ClienteJpaRepository
+// que es quien realmente habla con la base de datos.
+// Los nombres de los métodos no cambian para que los servicios sigan funcionando igual.
 @Repository
 public class InMemoryClienteRepository implements ClienteRepository {
 
-    // Vector dinámico para almacenar clientes (HU6)
-    private final List<Cliente> vectorClientes = new ArrayList<>();
+    // Spring inyecta automáticamente la interfaz JPA que creamos
+    private final ClienteJpaRepository clienteJpaRepository;
+
+    public InMemoryClienteRepository(ClienteJpaRepository clienteJpaRepository) {
+        this.clienteJpaRepository = clienteJpaRepository;
+    }
 
     @Override
     public void guardar(Cliente cliente) {
-        vectorClientes.add(cliente);
+        // save() de JPA inserta si no existe, o actualiza si ya existe (upsert)
+        clienteJpaRepository.save(cliente);
     }
 
     @Override
     public void modificar(Cliente cliente) {
-        for (int i = 0; i < vectorClientes.size(); i++) {
-            if (vectorClientes.get(i).getCedula().equals(cliente.getCedula())) {
-                vectorClientes.set(i, cliente);
-                return;
-            }
-        }
+        // save() también funciona para actualizar, JPA detecta que ya existe por la cédula (ID)
+        clienteJpaRepository.save(cliente);
     }
 
     @Override
     public void eliminar(String cedula) {
-        for (int i = 0; i < vectorClientes.size(); i++) {
-            if (vectorClientes.get(i).getCedula().equals(cedula)) {
-                vectorClientes.remove(i);
-                break; // Rompemos el ciclo porque ya lo eliminó
-            }
-        }
+        // deleteById() borra la fila cuya cédula coincide con el ID recibido
+        clienteJpaRepository.deleteById(cedula);
     }
 
     @Override
     public Cliente buscarPorCedula(String cedula) {
-        for (int i = 0; i < vectorClientes.size(); i++) {
-            Cliente cliente = vectorClientes.get(i);
-            if (cliente.getCedula().equals(cedula)) {
-                return cliente;
-            }
-        }
-        return null; // Si no lo encuentra
+        // findById() devuelve un Optional; si no encuentra nada, retornamos null
+        // (igual que antes con el ArrayList)
+        return clienteJpaRepository.findById(cedula).orElse(null);
     }
 
     @Override
     public List<Cliente> listarTodos() {
-        return new ArrayList<>(vectorClientes);
+        // findAll() devuelve todos los clientes guardados en la base de datos
+        return clienteJpaRepository.findAll();
     }
 }

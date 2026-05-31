@@ -1,34 +1,41 @@
 package com.renting.domain.model;
 
-/**
- * Representa un vehículo tipo Sedán.
- * Cumple con HU3: Herencia (extiende de Vehiculo) y Polimorfismo.
- */
-public class CarroSedan extends Vehiculo {
-    
-    // Atributos específicos
-    private String tipoCombustible; // "gasolina", "diésel", "eléctrico"
-    private String transmision;     // "automática", "manual"
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+// CarroSedan hereda de Vehiculo.
+// Con DiscriminatorValue("sedan"), JPA guarda "sedan" en la columna "tipo" de la tabla vehiculo
+// cuando guarda un objeto de esta clase.
+@Entity
+@DiscriminatorValue("sedan")
+public class CarroSedan extends Vehiculo {
+
+    @Column(name = "tipo_combustible", length = 20)
+    private String tipoCombustible;
+
+    @Column(name = "transmision", length = 20)
+    private String transmision;
+
+    // Constructor vacío requerido por JPA
     public CarroSedan() {
         super();
     }
 
-    public CarroSedan(String placa, String marca, int modelo, float precioDiario, String estado, 
+    public CarroSedan(String placa, String marca, int modelo, float precioDiario, String estado,
                       String tipoCombustible, String transmision) {
         super(placa, marca, modelo, precioDiario, estado);
         setTipoCombustible(tipoCombustible);
         setTransmision(transmision);
     }
 
-    // Getters y Setters
     public String getTipoCombustible() {
         return tipoCombustible;
     }
 
     public void setTipoCombustible(String tipoCombustible) {
-        if (tipoCombustible == null || (!tipoCombustible.equalsIgnoreCase("gasolina") 
-            && !tipoCombustible.equalsIgnoreCase("diésel") 
+        if (tipoCombustible == null || (!tipoCombustible.equalsIgnoreCase("gasolina")
+            && !tipoCombustible.equalsIgnoreCase("diésel")
             && !tipoCombustible.equalsIgnoreCase("eléctrico")
             && !tipoCombustible.equalsIgnoreCase("diesel")
             && !tipoCombustible.equalsIgnoreCase("electrico"))) {
@@ -42,7 +49,7 @@ public class CarroSedan extends Vehiculo {
     }
 
     public void setTransmision(String transmision) {
-        if (transmision == null || (!transmision.equalsIgnoreCase("automática") 
+        if (transmision == null || (!transmision.equalsIgnoreCase("automática")
             && !transmision.equalsIgnoreCase("manual")
             && !transmision.equalsIgnoreCase("automatica"))) {
             throw new IllegalArgumentException("Transmisión inválida (automática o manual).");

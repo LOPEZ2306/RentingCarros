@@ -1,15 +1,23 @@
 package com.renting.domain.model;
 
-/**
- * Representa un vehículo tipo SUV.
- * Cumple con HU3: Herencia (extiende de Vehiculo) y Polimorfismo.
- */
-public class CamionetaSUV extends Vehiculo {
-    
-    // Atributos específicos
-    private String traccion;          // "4x2" o "4x4"
-    private float capacidadMaletero;  // En litros
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+// CamionetaSUV hereda de Vehiculo.
+// Con DiscriminatorValue("suv"), JPA guarda "suv" en la columna "tipo" de la tabla vehiculo
+// cuando guarda un objeto de esta clase.
+@Entity
+@DiscriminatorValue("suv")
+public class CamionetaSUV extends Vehiculo {
+
+    @Column(name = "traccion", length = 10)
+    private String traccion;
+
+    @Column(name = "capacidad_maletero")
+    private float capacidadMaletero;
+
+    // Constructor vacío requerido por JPA
     public CamionetaSUV() {
         super();
     }
@@ -21,7 +29,6 @@ public class CamionetaSUV extends Vehiculo {
         setCapacidadMaletero(capacidadMaletero);
     }
 
-    // Getters y Setters
     public String getTraccion() {
         return traccion;
     }
