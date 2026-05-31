@@ -21,12 +21,11 @@ public class RentingService {
     }
 
     public void registrarContrato(ContratoRenting contrato) {
-        // Validar que el ID del contrato no exista
+        
         if (contratoRepository.buscarPorId(contrato.getIdContrato()) != null) {
             throw new IllegalArgumentException("Ya existe un contrato con ese ID.");
         }
 
-        // Validar existencia de cliente y vehiculo
         if (clienteService.buscarCliente(contrato.getCedulaCliente()) == null) {
             throw new IllegalArgumentException("El cliente no existe en el sistema.");
         }
@@ -36,23 +35,19 @@ public class RentingService {
             throw new IllegalArgumentException("El vehículo no existe en el sistema.");
         }
 
-        // Regla 1: No alquilar más de un vehículo por cliente al mismo tiempo
         if (contratoRepository.buscarActivoPorCliente(contrato.getCedulaCliente()) != null) {
             throw new IllegalArgumentException("El cliente ya tiene un vehículo alquilado actualmente.");
         }
 
-        // Regla 2: No alquilar vehículo en estado 'alquilado'
+        
         if ("alquilado".equalsIgnoreCase(vehiculo.getEstado())) {
             throw new IllegalArgumentException("El vehículo solicitado ya se encuentra alquilado.");
         }
 
-        // Establecer estado inicial
         contrato.setEstado("activo");
 
-        // Guardar contrato
         contratoRepository.guardar(contrato);
 
-        // Actualizar estado del vehículo a alquilado
         vehiculo.setEstado("alquilado");
         vehiculoService.modificarVehiculo(vehiculo);
     }
@@ -63,8 +58,6 @@ public class RentingService {
             throw new IllegalArgumentException("El contrato que intenta modificar no existe.");
         }
 
-        // Regla 3: Los contratos pueden modificarse solo en los campos de fecha o duración
-        // El IdContrato, Cédula y Placa no pueden modificarse.
         contratoActual.setFechaInicio(contratoModificado.getFechaInicio());
         contratoActual.setFechaFin(contratoModificado.getFechaFin());
         contratoActual.setTotalDias(contratoModificado.getTotalDias());
@@ -82,11 +75,9 @@ public class RentingService {
             throw new IllegalArgumentException("El contrato ya fue finalizado anteriormente.");
         }
 
-        // Finalizar el contrato
         contrato.setEstado("finalizado");
         contratoRepository.modificar(contrato);
 
-        // Regla 4: Volver el vehículo a disponible
         Vehiculo vehiculo = vehiculoService.buscarVehiculo(contrato.getPlacaVehiculo());
         if (vehiculo != null) {
             vehiculo.setEstado("disponible");

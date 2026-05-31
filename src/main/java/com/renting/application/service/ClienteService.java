@@ -33,7 +33,6 @@ public class ClienteService {
         if (clienteRepository.buscarPorCedula(cedula) == null) {
             throw new IllegalArgumentException("No se encontró el cliente a eliminar.");
         }
-        // Nota: En HU4 se debe validar que el cliente no tenga contratos activos antes de eliminar.
         clienteRepository.eliminar(cedula);
     }
 
