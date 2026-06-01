@@ -40,6 +40,8 @@ public class ClienteService {
         if (noExiste) {
             throw new IllegalArgumentException("No se encontró el cliente a eliminar.");
         }
+<<<<<<< HEAD
+=======
 
         boolean tieneContratoActivo = contratoRepository.buscarActivoPorCliente(cedula) != null;
         if (tieneContratoActivo) {
@@ -49,6 +51,7 @@ public class ClienteService {
             );
         }
 
+>>>>>>> 3a5c6a9f2f7ba38d35bfa1134f211ec473dec470
         clienteRepository.eliminar(cedula);
     }
 

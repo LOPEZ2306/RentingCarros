@@ -1,16 +1,37 @@
 package com.renting.domain.model;
 
 import com.renting.infrastructure.util.RecursiveValidator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+// Esta clase representa a un cliente del sistema de renting.
+// Con JPA, cada objeto Cliente se guarda como una fila en la tabla "cliente" de MySQL.
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 
+    @Id
+    @Column(name = "cedula", nullable = false, length = 20)
     private String cedula;
+
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
+
+    @Column(name = "apellido", nullable = false, length = 50)
     private String apellido;
+
+    @Column(name = "telefono", length = 20)
     private String telefono;
+
+    @Column(name = "direccion", length = 100)
     private String direccion;
+
+    @Column(name = "licencia_conduccion", length = 30)
     private String licenciaConduccion;
 
+    // Constructor vacío requerido por JPA
     public Cliente() {
     }
 
@@ -72,7 +93,6 @@ public class Cliente {
         return direccion;
     }
 
-    /** La dirección no tiene restricciones especiales */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
@@ -81,7 +101,6 @@ public class Cliente {
         return licenciaConduccion;
     }
 
-    /** La licencia no tiene restricciones especiales */
     public void setLicenciaConduccion(String licenciaConduccion) {
         this.licenciaConduccion = licenciaConduccion;
     }

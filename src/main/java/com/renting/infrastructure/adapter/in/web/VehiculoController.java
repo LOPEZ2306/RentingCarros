@@ -75,7 +75,6 @@ public class VehiculoController {
     @PutMapping
     public ResponseEntity<String> modificarVehiculo(@RequestBody Map<String, Object> payload) {
         try {
-            // Reutilizamos la lógica del post para armar el objeto polimórfico
             String tipo = (String) payload.get("tipo");
             Vehiculo v;
             if ("sedan".equalsIgnoreCase(tipo)) {

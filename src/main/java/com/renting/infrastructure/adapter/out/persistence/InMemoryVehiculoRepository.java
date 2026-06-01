@@ -4,56 +4,50 @@ import com.renting.domain.model.Vehiculo;
 import com.renting.domain.repository.VehiculoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Adaptador de persistencia en memoria usando Vectores Dinámicos (ArrayList).
- * Cumple con HU6: vector_vehiculos.
- */
+// Este adaptador conecta la lógica del dominio con la base de datos MySQL.
+// Antes usaba un ArrayList en memoria; ahora delega cada operación a VehiculoJpaRepository
+// que es quien realmente habla con la base de datos.
+// Los nombres de los métodos no cambian para que los servicios sigan funcionando igual.
 @Repository
 public class InMemoryVehiculoRepository implements VehiculoRepository {
 
-    private final List<Vehiculo> vectorVehiculos = new ArrayList<>();
+    // Spring inyecta automáticamente la interfaz JPA que creamos
+    private final VehiculoJpaRepository vehiculoJpaRepository;
+
+    public InMemoryVehiculoRepository(VehiculoJpaRepository vehiculoJpaRepository) {
+        this.vehiculoJpaRepository = vehiculoJpaRepository;
+    }
 
     @Override
     public void guardar(Vehiculo vehiculo) {
-        vectorVehiculos.add(vehiculo);
+        // save() de JPA inserta si no existe, o actualiza si ya existe (upsert)
+        vehiculoJpaRepository.save(vehiculo);
     }
 
     @Override
     public void modificar(Vehiculo vehiculo) {
-        for (int i = 0; i < vectorVehiculos.size(); i++) {
-            if (vectorVehiculos.get(i).getPlaca().equals(vehiculo.getPlaca())) {
-                vectorVehiculos.set(i, vehiculo);
-                return;
-            }
-        }
+        // save() también funciona para actualizar, JPA detecta que ya existe por la placa (ID)
+        vehiculoJpaRepository.save(vehiculo);
     }
 
     @Override
     public void eliminar(String placa) {
-        for (int i = 0; i < vectorVehiculos.size(); i++) {
-            if (vectorVehiculos.get(i).getPlaca().equals(placa)) {
-                vectorVehiculos.remove(i);
-                break;
-            }
-        }
+        // deleteById() borra la fila cuya placa coincide con el ID recibido
+        vehiculoJpaRepository.deleteById(placa);
     }
 
     @Override
     public Vehiculo buscarPorPlaca(String placa) {
-        for (int i = 0; i < vectorVehiculos.size(); i++) {
-            Vehiculo vehiculo = vectorVehiculos.get(i);
-            if (vehiculo.getPlaca().equals(placa)) {
-                return vehiculo;
-            }
-        }
-        return null;
+        // findById() devuelve un Optional; si no encuentra nada, retornamos null
+        // (igual que antes con el ArrayList)
+        return vehiculoJpaRepository.findById(placa).orElse(null);
     }
 
     @Override
     public List<Vehiculo> listarTodos() {
-        return new ArrayList<>(vectorVehiculos);
+        // findAll() devuelve todos los vehículos guardados en la base de datos
+        return vehiculoJpaRepository.findAll();
     }
 }
