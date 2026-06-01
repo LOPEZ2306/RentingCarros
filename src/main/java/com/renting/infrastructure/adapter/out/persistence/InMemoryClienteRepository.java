@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+<<<<<<< HEAD
 // Este adaptador conecta la lógica del dominio con la base de datos MySQL.
 // Antes usaba un ArrayList en memoria; ahora delega cada operación a ClienteJpaRepository
 // que es quien realmente habla con la base de datos.
@@ -19,6 +20,11 @@ public class InMemoryClienteRepository implements ClienteRepository {
     public InMemoryClienteRepository(ClienteJpaRepository clienteJpaRepository) {
         this.clienteJpaRepository = clienteJpaRepository;
     }
+=======
+@Repository
+public class InMemoryClienteRepository implements ClienteRepository {
+    private final List<Cliente> vectorClientes = new ArrayList<>();
+>>>>>>> 3a5c6a9f2f7ba38d35bfa1134f211ec473dec470
 
     @Override
     public void guardar(Cliente cliente) {
