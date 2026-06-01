@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-// Esta clase representa un contrato de renting.
-// Con JPA, cada objeto ContratoRenting se guarda como una fila en la tabla "contrato" de MySQL.
 @Entity
 @Table(name = "contrato")
 public class ContratoRenting {
@@ -34,9 +32,8 @@ public class ContratoRenting {
     private float valorTotal;
 
     @Column(name = "estado", nullable = false, length = 15)
-    private String estado;
+    private String estado = "activo";
 
-    // Constructor vacío requerido por JPA
     public ContratoRenting() {
     }
 
@@ -128,7 +125,10 @@ public class ContratoRenting {
     }
 
     public void setEstado(String estado) {
-        if (estado == null || (!estado.equalsIgnoreCase("activo") && !estado.equalsIgnoreCase("finalizado"))) {
+        if (estado == null) {
+            return;
+        }
+        if (!estado.equalsIgnoreCase("activo") && !estado.equalsIgnoreCase("finalizado")) {
             throw new IllegalArgumentException("El estado debe ser 'activo' o 'finalizado'.");
         }
         this.estado = estado;

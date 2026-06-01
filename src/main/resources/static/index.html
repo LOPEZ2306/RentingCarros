@@ -21,37 +21,26 @@
 
         <main class="content">
 
+            <!-- CLIENTES -->
             <section id="clientes" class="section active">
-                <header>
-                    <h1>Gestión de Clientes</h1>
-                </header>
-                <div class="card">
-                    <h3>Registrar/Modificar Cliente</h3>
-                    <form id="cliente-form">
-                        <div class="form-group">
-                            <input type="text" id="c-cedula" placeholder="Cédula" required>
-                            <input type="text" id="c-nombre" placeholder="Nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="c-apellido" placeholder="Apellido" required>
-                            <input type="text" id="c-telefono" placeholder="Teléfono" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="c-direccion" placeholder="Dirección" required>
-                            <input type="text" id="c-licencia" placeholder="Licencia de Conducción" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn-primary" onclick="guardarCliente('POST')">Registrar</button>
-                            <button type="button" class="btn-secondary" onclick="guardarCliente('PUT')">Modificar</button>
-                        </div>
-                    </form>
-                </div>
+                <header><h1>Gestión de Clientes</h1></header>
 
-                <div class="card mt-4">
-                    <h3>Buscar/Eliminar</h3>
+                <div class="card">
+                    <h3>Registrar Cliente</h3>
                     <div class="form-group">
-                        <input type="text" id="c-buscar-cedula" placeholder="Cédula a buscar/eliminar">
-                        <button type="button" class="btn-danger" onclick="eliminarCliente()">Eliminar</button>
+                        <input type="text" id="c-cedula"   placeholder="Cédula">
+                        <input type="text" id="c-nombre"   placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="c-apellido" placeholder="Apellido">
+                        <input type="text" id="c-telefono" placeholder="Teléfono">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="c-direccion" placeholder="Dirección">
+                        <input type="text" id="c-licencia"  placeholder="Licencia de Conducción">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-primary" onclick="guardarCliente('POST')">Registrar</button>
                     </div>
                 </div>
 
@@ -65,6 +54,7 @@
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Teléfono</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tabla-clientes"></tbody>
@@ -72,58 +62,53 @@
                 </div>
             </section>
 
+            <!-- VEHÍCULOS -->
             <section id="vehiculos" class="section">
-                <header>
-                    <h1>Gestión de Vehículos</h1>
-                </header>
+                <header><h1>Gestión de Vehículos</h1></header>
+
                 <div class="card">
-                    <h3>Registrar/Modificar Vehículo</h3>
-                    <form id="vehiculo-form">
-                        <div class="form-group">
-                            <select id="v-tipo" onchange="toggleVehiculoCampos()">
-                                <option value="sedan">Carro Sedán</option>
-                                <option value="suv">Camioneta SUV</option>
-                            </select>
-                            <input type="text" id="v-placa" placeholder="Placa" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="v-marca" placeholder="Marca" required>
-                            <input type="number" id="v-modelo" placeholder="Modelo (Año)" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" id="v-precio" placeholder="Precio Diario" required>
-                            <select id="v-estado">
-                                <option value="disponible">Disponible</option>
-                                <option value="alquilado">Alquilado</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group sedan-campos">
-                            <select id="v-combustible">
-                                <option value="gasolina">Gasolina</option>
-                                <option value="eléctrico">Eléctrico</option>
-                                <option value="diésel">Diésel</option>
-                            </select>
-                            <select id="v-transmision">
-                                <option value="automática">Automática</option>
-                                <option value="manual">Manual</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group suv-campos" style="display:none;">
-                            <select id="v-traccion">
-                                <option value="4x2">4x2</option>
-                                <option value="4x4">4x4</option>
-                            </select>
-                            <input type="number" id="v-maletero" placeholder="Capacidad Maletero (L)">
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn-primary" onclick="guardarVehiculo('POST')">Registrar</button>
-                            <button type="button" class="btn-secondary" onclick="guardarVehiculo('PUT')">Modificar</button>
-                        </div>
-                    </form>
+                    <h3>Registrar Vehículo</h3>
+                    <div class="form-group">
+                        <select id="v-tipo" onchange="toggleVehiculoCampos()">
+                            <option value="sedan">Carro Sedán</option>
+                            <option value="suv">Camioneta SUV</option>
+                        </select>
+                        <input type="text" id="v-placa" placeholder="Placa">
+                    </div>
+                    <div class="form-group">
+                        <input type="text"   id="v-marca"  placeholder="Marca">
+                        <input type="number" id="v-modelo" placeholder="Modelo ">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="v-precio" placeholder="Precio Diario">
+                        <select id="v-estado">
+                            <option value="disponible">Disponible</option>
+                            <option value="alquilado">Alquilado</option>
+                        </select>
+                    </div>
+                    <div class="form-group sedan-campos">
+                        <select id="v-combustible">
+                            <option value="gasolina">Gasolina</option>
+                            <option value="eléctrico">Eléctrico</option>
+                            <option value="diésel">Diésel</option>
+                        </select>
+                        <select id="v-transmision">
+                            <option value="automática">Automática</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                    <div class="form-group suv-campos" style="display:none;">
+                        <select id="v-traccion">
+                            <option value="4x2">4x2</option>
+                            <option value="4x4">4x4</option>
+                        </select>
+                        <input type="number" id="v-maletero" placeholder="Capacidad Maletero (L)">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-primary" onclick="guardarVehiculo('POST')">Registrar</button>
+                    </div>
                 </div>
+
                 <div class="card mt-4">
                     <h3>Lista de Vehículos</h3>
                     <button class="btn-secondary mb-2" onclick="cargarVehiculos()">Actualizar Lista</button>
@@ -133,8 +118,9 @@
                                 <th>Placa</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
-                                <th>Precio</th>
+                                <th>Precio/día</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tabla-vehiculos"></tbody>
@@ -142,108 +128,116 @@
                 </div>
             </section>
 
+            <!-- RENTING -->
             <section id="renting" class="section">
-                <header>
-                    <h1>Gestión de Renting</h1>
-                </header>
+                <header><h1>Gestión de Renting</h1></header>
+
                 <div class="card">
                     <h3>Registrar Nuevo Contrato</h3>
-                    <form id="renting-form">
-                        <div class="form-group">
-                            <input type="text" id="r-id" placeholder="ID Contrato" required>
-                            <input type="text" id="r-cedula" placeholder="Cédula Cliente" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="r-placa" placeholder="Placa Vehículo" required>
-                            <input type="text" id="r-fechaini" placeholder="Fecha Inicio" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="r-fechafin" placeholder="Fecha Fin" required>
-                            <input type="number" id="r-dias" placeholder="Total Días" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" id="r-valor" placeholder="Valor Total" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn-primary" onclick="registrarContrato()">Alquilar Vehículo</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card mt-4">
-                    <h3>Finalizar Contrato (Devolución)</h3>
                     <div class="form-group">
-                        <input type="text" id="r-buscar-id" placeholder="ID Contrato a finalizar">
-                        <button type="button" class="btn-danger" onclick="finalizarContrato()">Finalizar y Devolver</button>
+                        <input type="text" id="r-id" placeholder="ID Contrato">
                     </div>
+                    <div class="form-group">
+                        <input type="text" id="r-cedula" placeholder="Cédula Cliente"
+                               onblur="buscarClienteParaContrato()">
+                        <input type="text" id="r-nombre-cliente" placeholder="Nombre "
+                               readonly style="background:#f0f4ff; cursor:not-allowed;">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="r-placa" placeholder="Placa Vehículo"
+                               onblur="calcularPreviewDesdeBackend()">
+                        <input type="text" id="r-marca-vehiculo" placeholder="Vehículo "
+                               readonly style="background:#f0f4ff; cursor:not-allowed;">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="r-fechaini" onchange="calcularPreviewDesdeBackend()">
+                        <input type="date" id="r-fechafin" onchange="calcularPreviewDesdeBackend()">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="r-dias"  placeholder="Total Días "
+                               readonly style="background:#f0f4ff; cursor:not-allowed;">
+                        <input type="number" id="r-valor" placeholder="Valor Total "
+                               readonly style="background:#f0f4ff; cursor:not-allowed;">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-primary" onclick="registrarContrato()">Alquilar Vehículo</button>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <h3>Lista de Contratos</h3>
+                    <button class="btn-secondary mb-2" onclick="cargarContratos()">Actualizar Lista</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Vehículo</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Días</th>
+                                <th>Valor</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-contratos"></tbody>
+                    </table>
                 </div>
             </section>
 
-<section id="informes" class="section">
-    <header>
-        <h1>Informes Generales</h1>
-    </header>
-
-    <div style="margin-bottom: 1rem;">
-        <button class="btn-secondary" onclick="cargarTodosLosInformes()">Actualizar Informes</button>
-    </div>
-    <div class="card informe-card">
-        <h3>Contratos Activos</h3>
-        <div class="informe-numero" id="informe-contratos-activos">--</div>
-        <p class="informe-label">contratos en curso</p>
-    </div>
-
-    <div class="card informe-card">
-        <h3>Estado de la Flota</h3>
-        <div class="informe-fila">
-            <span>Disponibles:</span>
-            <span class="informe-numero pequeño" id="informe-vehiculos-disponibles">--</span>
-        </div>
-        <div class="informe-fila">
-            <span>Alquilados:</span>
-            <span class="informe-numero pequeño" id="informe-vehiculos-alquilados">--</span>
-        </div>
-    </div>
-
-    <div class="card informe-card">
-        <h3>Ingresos Totales</h3>
-        <div class="informe-numero" id="informe-ingresos">--</div>
-        <p class="informe-label">por contratos activos</p>
-    </div>
-
-    <div class="card mt-4">
-        <h3>Detalle Contratos Activos</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID Contrato</th>
-                    <th>Cliente</th>
-                    <th>Vehículo</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    <th>Valor Total</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-contratos-activos"></tbody>
-        </table>
-    </div>
-
-    <div class="card mt-4">
-        <h3>Detalle Contratos Finalizados</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID Contrato</th>
-                    <th>Cliente</th>
-                    <th>Vehículo</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    <th>Valor Total</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-contratos-finalizados"></tbody>
-        </table>
-    </div>
-</section>
+            <!-- INFORMES -->
+            <section id="informes" class="section">
+                <header><h1>Informes Generales</h1></header>
+                <div style="margin-bottom: 1rem;">
+                    <button class="btn-secondary" onclick="cargarTodosLosInformes()">Actualizar Informes</button>
+                </div>
+                <div class="card informe-card">
+                    <h3>Contratos Activos</h3>
+                    <div class="informe-numero" id="informe-contratos-activos">--</div>
+                    <p class="informe-label">contratos en curso</p>
+                </div>
+                <div class="card informe-card">
+                    <h3>Estado de la Flota</h3>
+                    <div class="informe-fila">
+                        <span>Disponibles:</span>
+                        <span class="informe-numero pequeño" id="informe-vehiculos-disponibles">--</span>
+                    </div>
+                    <div class="informe-fila">
+                        <span>Alquilados:</span>
+                        <span class="informe-numero pequeño" id="informe-vehiculos-alquilados">--</span>
+                    </div>
+                </div>
+                <div class="card informe-card">
+                    <h3>Ingresos Totales</h3>
+                    <div class="informe-numero" id="informe-ingresos">--</div>
+                    <p class="informe-label">por contratos activos</p>
+                </div>
+                <div class="card mt-4">
+                    <h3>Detalle Contratos Activos</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID Contrato</th><th>Cliente</th><th>Vehículo</th>
+                                <th>Fecha Inicio</th><th>Fecha Fin</th><th>Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-contratos-activos"></tbody>
+                    </table>
+                </div>
+                <div class="card mt-4">
+                    <h3>Detalle Contratos Finalizados</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID Contrato</th><th>Cliente</th><th>Vehículo</th>
+                                <th>Fecha Inicio</th><th>Fecha Fin</th><th>Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-contratos-finalizados"></tbody>
+                    </table>
+                </div>
+            </section>
 
         </main>
     </div>

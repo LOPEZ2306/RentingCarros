@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/renting")
@@ -29,6 +30,19 @@ public class RentingController {
             return ResponseEntity.ok(c);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/preview")
+    public ResponseEntity<?> previewContrato(
+            @RequestParam String placa,
+            @RequestParam String fechaInicio,
+            @RequestParam String fechaFin) {
+        try {
+            Map<String, Object> preview = rentingService.calcularPreviewContrato(placa, fechaInicio, fechaFin);
+            return ResponseEntity.ok(preview);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     @PostMapping
